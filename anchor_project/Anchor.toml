@@ -12,10 +12,10 @@ blog_dapp = "9MFy53ajGDaY3EqidnZfyYhwXNa5rxjTahhyRpKv9ZWN"
 url = "https://api.apr.dev"
 
 [provider]
-cluster = "devnet"
-wallet = "~/.config/solana/devnet.json"
-#cluster = "localnet"
-#wallet = "~/.config/solana/id.json"
+#cluster = "devnet"
+#wallet = "~/.config/solana/devnet.json"
+cluster = "localnet"
+wallet = "~/.config/solana/id.json"
 
 
 [scripts]

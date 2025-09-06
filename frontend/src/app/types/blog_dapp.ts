@@ -8,21 +8,198 @@ export type BlogDapp = {
   "address": "9MFy53ajGDaY3EqidnZfyYhwXNa5rxjTahhyRpKv9ZWN",
   "metadata": {
     "name": "blogDapp",
-    "version": "0.2.0",
-    "spec": "0.1.0"
+    "version": "0.3.0",
+    "spec": "0.1.0",
+    "description": "Created by M4ert"
   },
   "instructions": [
     {
-      "name": "createPost",
+      "name": "editContent",
       "discriminator": [
-        123,
+        159,
+        243,
+        0,
+        246,
+        151,
+        76,
+        241,
+        132
+      ],
+      "accounts": [
+        {
+          "name": "post",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "post.blog",
+                "account": "post"
+              },
+              {
+                "kind": "account",
+                "path": "post.id",
+                "account": "post"
+              }
+            ]
+          }
+        },
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "post"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "contentChunk",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "editPost",
+      "discriminator": [
+        218,
+        25,
+        82,
+        105,
+        200,
+        189,
+        238,
+        75
+      ],
+      "accounts": [
+        {
+          "name": "post",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "post.blog",
+                "account": "post"
+              },
+              {
+                "kind": "account",
+                "path": "post.id",
+                "account": "post"
+              }
+            ]
+          }
+        },
+        {
+          "name": "author",
+          "signer": true,
+          "relations": [
+            "post"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": {
+            "option": "string"
+          }
+        },
+        {
+          "name": "tags",
+          "type": {
+            "option": {
+              "vec": "string"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "initBlog",
+      "discriminator": [
+        251,
+        119,
+        6,
+        126,
+        110,
+        166,
+        6,
+        245
+      ],
+      "accounts": [
+        {
+          "name": "blog",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  108,
+                  111,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "author"
+              }
+            ]
+          }
+        },
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "newPost",
+      "discriminator": [
+        223,
+        163,
+        239,
         92,
-        184,
-        29,
-        231,
-        24,
-        15,
-        202
+        201,
+        174,
+        172,
+        224
       ],
       "accounts": [
         {
@@ -82,16 +259,16 @@ export type BlogDapp = {
       ]
     },
     {
-      "name": "deletePost",
+      "name": "removePost",
       "discriminator": [
-        208,
-        39,
-        67,
-        161,
-        55,
-        13,
-        153,
-        42
+        146,
+        149,
+        51,
+        160,
+        216,
+        132,
+        210,
+        177
       ],
       "accounts": [
         {
@@ -131,182 +308,6 @@ export type BlogDapp = {
         }
       ],
       "args": []
-    },
-    {
-      "name": "initializeBlog",
-      "discriminator": [
-        195,
-        223,
-        187,
-        134,
-        244,
-        232,
-        54,
-        32
-      ],
-      "accounts": [
-        {
-          "name": "blog",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  98,
-                  108,
-                  111,
-                  103
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "author"
-              }
-            ]
-          }
-        },
-        {
-          "name": "author",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "systemProgram",
-          "address": "11111111111111111111111111111111"
-        }
-      ],
-      "args": [
-        {
-          "name": "title",
-          "type": "string"
-        },
-        {
-          "name": "description",
-          "type": "string"
-        }
-      ]
-    },
-    {
-      "name": "updatePost",
-      "discriminator": [
-        151,
-        128,
-        207,
-        107,
-        169,
-        246,
-        241,
-        107
-      ],
-      "accounts": [
-        {
-          "name": "post",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  111,
-                  115,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "post.blog",
-                "account": "post"
-              },
-              {
-                "kind": "account",
-                "path": "post.id",
-                "account": "post"
-              }
-            ]
-          }
-        },
-        {
-          "name": "author",
-          "signer": true,
-          "relations": [
-            "post"
-          ]
-        }
-      ],
-      "args": [
-        {
-          "name": "title",
-          "type": {
-            "option": "string"
-          }
-        },
-        {
-          "name": "tags",
-          "type": {
-            "option": {
-              "vec": "string"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "updatePostContent",
-      "discriminator": [
-        174,
-        105,
-        108,
-        52,
-        80,
-        220,
-        151,
-        106
-      ],
-      "accounts": [
-        {
-          "name": "post",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  112,
-                  111,
-                  115,
-                  116
-                ]
-              },
-              {
-                "kind": "account",
-                "path": "post.blog",
-                "account": "post"
-              },
-              {
-                "kind": "account",
-                "path": "post.id",
-                "account": "post"
-              }
-            ]
-          }
-        },
-        {
-          "name": "author",
-          "writable": true,
-          "signer": true,
-          "relations": [
-            "post"
-          ]
-        }
-      ],
-      "args": [
-        {
-          "name": "contentChunk",
-          "type": "string"
-        }
-      ]
     }
   ],
   "accounts": [

@@ -45,7 +45,7 @@ describe("blog_dapp", () => {
       const description = "This is a blog about blockchain development";
 
       await program.methods
-        .initializeBlog(title, description)
+        .initBlog(title, description)
         .accounts({
           blog: blogPda,
           author: author.publicKey,
@@ -86,7 +86,7 @@ describe("blog_dapp", () => {
 
       try {
         await program.methods
-          .initializeBlog(longTitle, description)
+          .initBlog(longTitle, description)
           .accounts({
             blog: anotherBlogPda,
             author: anotherAuthor.publicKey,
@@ -123,7 +123,7 @@ describe("blog_dapp", () => {
 
       try {
         await program.methods
-          .initializeBlog(title, longDescription)
+          .initBlog(title, longDescription)
           .accounts({
             blog: anotherBlogPda,
             author: anotherAuthor.publicKey,
@@ -142,7 +142,7 @@ describe("blog_dapp", () => {
 
       try {
         await program.methods
-          .initializeBlog(title, description)
+          .initBlog(title, description)
           .accounts({
             blog: blogPda,
             author: author.publicKey,
@@ -181,7 +181,7 @@ describe("blog_dapp", () => {
 
       // Ahora `createPost` no recibe `content`
       await program.methods
-        .createPost(title, tags)
+        .newPost(title, tags)
         .accounts({
           post: postPda,
           blog: blogPda,
@@ -224,7 +224,7 @@ describe("blog_dapp", () => {
       const tags = ["development"];
 
       await program.methods
-        .createPost(title, tags)
+        .newPost(title, tags)
         .accounts({
           post: secondPostPda,
           blog: blogPda,
@@ -259,7 +259,7 @@ describe("blog_dapp", () => {
       const tags = ["1234567890", "1234567890"];
 
       await program.methods
-        .createPost(longTitle, tags)
+        .newPost(longTitle, tags)
         .accounts({
           post: secondPostPda,
           blog: blogPda,
@@ -294,7 +294,7 @@ describe("blog_dapp", () => {
       const tags = ["solana", "anchor"];
 
       await program.methods
-        .createPost(title, tags)
+        .newPost(title, tags)
         .accounts({
           post: anotherPostPda,
           blog: blogPda,
@@ -311,7 +311,7 @@ describe("blog_dapp", () => {
       for (let i = 0; i < longContent.length; i += chunkSize) {
         const chunk = longContent.substring(i, i + chunkSize);
         await program.methods
-          .updatePostContent(chunk)
+          .editContent(chunk)
           .accounts({
             post: anotherPostPda,
             author: author.publicKey,
@@ -344,7 +344,7 @@ describe("blog_dapp", () => {
 
       try {
         await program.methods
-          .createPost(longTitle, tags)
+          .newPost(longTitle, tags)
           .accounts({
             post: anotherPostPda,
             blog: blogPda,
@@ -375,7 +375,7 @@ describe("blog_dapp", () => {
 
       try {
         await program.methods
-          .createPost(title, tags)
+          .newPost(title, tags)
           .accounts({
             post: anotherPostPda,
             blog: blogPda,
@@ -419,7 +419,7 @@ describe("blog_dapp", () => {
 
       try {
         await program.methods
-          .createPost(title, tags)
+          .newPost(title, tags)
           .accounts({
             post: anotherPostPda,
             blog: blogPda,
@@ -462,7 +462,7 @@ describe("blog_dapp", () => {
       await new Promise(resolve => setTimeout(resolve, 1200)); // Esperar para asegurar cambio en timestamp
 
       await program.methods
-        .updatePost(newTitle, null) // `updatePost` ahora solo tiene 2 args
+        .editPost(newTitle, null) // `updatePost` ahora solo tiene 2 args
         .accounts({
           post: postPda,
           author: author.publicKey,
@@ -479,7 +479,7 @@ describe("blog_dapp", () => {
       const newTags = ["updated", "tags"];
 
       await program.methods
-        .updatePost(null, newTags) // Solo actualizamos los tags
+        .editPost(null, newTags) // Solo actualizamos los tags
         .accounts({
           post: postPda,
           author: author.publicKey,
@@ -496,7 +496,7 @@ describe("blog_dapp", () => {
       const newTags = ["complete", "update"];
 
       await program.methods
-        .updatePost(newTitle, newTags) // Actualizamos ambos
+        .editPost(newTitle, newTags) // Actualizamos ambos
         .accounts({
           post: postPda,
           author: author.publicKey,
@@ -512,7 +512,7 @@ describe("blog_dapp", () => {
     it("should update content using updatePostContent", async () => {
       const content = "This is the new content.";
 
-      await program.methods.updatePostContent(content).accounts({
+      await program.methods.editContent(content).accounts({
         post: postPda,
         author: author.publicKey,
       }).signers([author]).rpc();
@@ -525,12 +525,12 @@ describe("blog_dapp", () => {
       const content = "Totally new content";
 
       // First, reset the content to an empty string
-      await program.methods.updatePostContent('').accounts({
+      await program.methods.editContent('').accounts({
         post: postPda,
         author: author.publicKey,
       }).signers([author]).rpc();
 
-      await program.methods.updatePostContent(content).accounts({
+      await program.methods.editContent(content).accounts({
         post: postPda,
         author: author.publicKey,
       }).signers([author]).rpc();
@@ -544,7 +544,7 @@ describe("blog_dapp", () => {
 
       try {
         await program.methods
-          .updatePost(longTitle, null)
+          .editPost(longTitle, null)
           .accounts({
             post: postPda,
             author: author.publicKey,
@@ -574,7 +574,7 @@ describe("blog_dapp", () => {
       const tags = ["solana", "anchor"];
 
       await program.methods
-        .createPost(title, tags)
+        .newPost(title, tags)
         .accounts({
           post: anotherPostPda,
           blog: blogPda,
@@ -592,7 +592,7 @@ describe("blog_dapp", () => {
         try {
           const chunk = longContent.substring(i, i + chunkSize);
           await program.methods
-            .updatePostContent(chunk)
+            .editContent(chunk)
             .accounts({
               post: anotherPostPda,
               author: author.publicKey,
@@ -611,7 +611,7 @@ describe("blog_dapp", () => {
 
       try {
         await program.methods
-          .updatePost(null, tooManyTags)
+          .editPost(null, tooManyTags)
           .accounts({
             post: postPda,
             author: author.publicKey,
@@ -640,7 +640,7 @@ describe("blog_dapp", () => {
 
       try {
         await program.methods
-          .updatePost("New title", null)
+          .editPost("New title", null)
           .accounts({
             post: postPda,
             author: wrongAuthor.publicKey,
@@ -675,7 +675,7 @@ describe("blog_dapp", () => {
       );
 
       await program.methods
-        .createPost("Post to be deleted", ["delete", "test"]) // Sin content
+        .newPost("Post to be deleted", ["delete", "test"]) // Sin content
         .accounts({
           post: postToDeletePda,
           blog: blogPda,
@@ -689,7 +689,7 @@ describe("blog_dapp", () => {
       const authorBalanceBefore = await provider.connection.getBalance(author.publicKey);
 
       await program.methods
-        .deletePost()
+        .removePost()
         .accounts({
           post: postToDeletePda,
           author: author.publicKey,
@@ -711,7 +711,7 @@ describe("blog_dapp", () => {
     it("should fail when trying to delete already deleted post", async () => {
       try {
         await program.methods
-          .deletePost()
+          .removePost()
           .accounts({
             post: postToDeletePda,
             author: author.publicKey,

@@ -24,7 +24,7 @@ export class BlogService {
     const [blogPda] = getBlogPda(this.wallet.publicKey);
 
     return await program.methods
-      .initializeBlog(title, description)
+      .initBlog(title, description)
       .accounts({
         // @ts-expect-error
         blog: blogPda,
@@ -67,7 +67,7 @@ export class BlogService {
 
     // Create post with title and tags only (no content)
     await program.methods
-      .createPost(title, tags)
+      .newPost(title, tags)
       .accounts({
         // @ts-ignore
         post: postPda,
@@ -103,7 +103,7 @@ export class BlogService {
 
     // First, we need to reset the content by getting the current post and determining what needs to be cleared
     await program.methods
-      .updatePostContent('')
+      .editContent('')
       .accounts({
         post: postPda,
         author: this.wallet.publicKey,
@@ -113,7 +113,7 @@ export class BlogService {
     // Add content in chunks
     for (const chunk of chunks) {
       await program.methods
-        .updatePostContent(chunk)
+        .editContent(chunk)
         .accounts({
           post: postPda,
           author: this.wallet.publicKey,
@@ -181,7 +181,7 @@ export class BlogService {
     // Update title and tags
     if (title !== undefined || tags !== undefined) {
       await program.methods
-        .updatePost(title || null, tags || null)
+        .editPost(title || null, tags || null)
         .accounts({
           post: postPda,
           author: this.wallet.publicKey,
@@ -204,7 +204,7 @@ export class BlogService {
     const [postPda] = getPostPda(blogPda, postId);
 
     return await program.methods
-      .deletePost()
+      .removePost()
       .accounts({
         post: postPda,
         author: this.wallet.publicKey,
