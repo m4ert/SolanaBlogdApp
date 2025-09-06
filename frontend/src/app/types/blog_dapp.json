@@ -1,0 +1,442 @@
+{
+  "address": "9MFy53ajGDaY3EqidnZfyYhwXNa5rxjTahhyRpKv9ZWN",
+  "metadata": {
+    "name": "blog_dapp",
+    "version": "0.2.0",
+    "spec": "0.1.0"
+  },
+  "instructions": [
+    {
+      "name": "create_post",
+      "discriminator": [
+        123,
+        92,
+        184,
+        29,
+        231,
+        24,
+        15,
+        202
+      ],
+      "accounts": [
+        {
+          "name": "post",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "blog"
+              },
+              {
+                "kind": "account",
+                "path": "blog.post_count",
+                "account": "Blog"
+              }
+            ]
+          }
+        },
+        {
+          "name": "blog",
+          "writable": true
+        },
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "blog"
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "tags",
+          "type": {
+            "vec": "string"
+          }
+        }
+      ]
+    },
+    {
+      "name": "delete_post",
+      "discriminator": [
+        208,
+        39,
+        67,
+        161,
+        55,
+        13,
+        153,
+        42
+      ],
+      "accounts": [
+        {
+          "name": "post",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "post.blog",
+                "account": "Post"
+              },
+              {
+                "kind": "account",
+                "path": "post.id",
+                "account": "Post"
+              }
+            ]
+          }
+        },
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "post"
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize_blog",
+      "discriminator": [
+        195,
+        223,
+        187,
+        134,
+        244,
+        232,
+        54,
+        32
+      ],
+      "accounts": [
+        {
+          "name": "blog",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  108,
+                  111,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "author"
+              }
+            ]
+          }
+        },
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "update_post",
+      "discriminator": [
+        151,
+        128,
+        207,
+        107,
+        169,
+        246,
+        241,
+        107
+      ],
+      "accounts": [
+        {
+          "name": "post",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "post.blog",
+                "account": "Post"
+              },
+              {
+                "kind": "account",
+                "path": "post.id",
+                "account": "Post"
+              }
+            ]
+          }
+        },
+        {
+          "name": "author",
+          "signer": true,
+          "relations": [
+            "post"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "title",
+          "type": {
+            "option": "string"
+          }
+        },
+        {
+          "name": "tags",
+          "type": {
+            "option": {
+              "vec": "string"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_post_content",
+      "discriminator": [
+        174,
+        105,
+        108,
+        52,
+        80,
+        220,
+        151,
+        106
+      ],
+      "accounts": [
+        {
+          "name": "post",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "post.blog",
+                "account": "Post"
+              },
+              {
+                "kind": "account",
+                "path": "post.id",
+                "account": "Post"
+              }
+            ]
+          }
+        },
+        {
+          "name": "author",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "post"
+          ]
+        }
+      ],
+      "args": [
+        {
+          "name": "content_chunk",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Blog",
+      "discriminator": [
+        152,
+        205,
+        212,
+        154,
+        186,
+        203,
+        207,
+        244
+      ]
+    },
+    {
+      "name": "Post",
+      "discriminator": [
+        8,
+        147,
+        90,
+        186,
+        185,
+        56,
+        192,
+        150
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "TitleTooLong",
+      "msg": "Title is too long"
+    },
+    {
+      "code": 6001,
+      "name": "DescriptionTooLong",
+      "msg": "Description is too long"
+    },
+    {
+      "code": 6002,
+      "name": "ContentTooLong",
+      "msg": "Content is too long"
+    },
+    {
+      "code": 6003,
+      "name": "TooManyTags",
+      "msg": "Too many tags"
+    },
+    {
+      "code": 6004,
+      "name": "PostNotFound",
+      "msg": "Post not found or already deleted"
+    },
+    {
+      "code": 6005,
+      "name": "UnauthorizedAuthor",
+      "msg": "Unauthorized: Only the author can perform this action"
+    }
+  ],
+  "types": [
+    {
+      "name": "Blog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "author",
+            "type": "pubkey"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "post_count",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Post",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "author",
+            "type": "pubkey"
+          },
+          {
+            "name": "blog",
+            "type": "pubkey"
+          },
+          {
+            "name": "id",
+            "type": "u64"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "type": "string"
+          },
+          {
+            "name": "tags",
+            "type": {
+              "vec": "string"
+            }
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
+          },
+          {
+            "name": "updated_at",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}
